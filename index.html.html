@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Millbrook Market — Fresh, Local, Fair Prices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-deep:#122840;
+    --orange:#E8792E;
+    --orange-deep:#C7611E;
+    --yellow:#F2B705;
+    --paper:#FAF7F2;
+    --white:#FFFFFF;
+    --ink:#1D2126;
+    --line: rgba(29,33,38,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:16.5px;
+    line-height:1.6;
+  }
+  h1,h2,h3,.display{font-family:'Fredoka', sans-serif; font-weight:600;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 40px;}
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--white);
+    border-bottom:3px solid var(--navy);
+    transition:box-shadow .2s ease;
+  }
+  header.scrolled{box-shadow:0 4px 18px rgba(27,58,92,0.12);}
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px; max-width:1160px; margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{width:38px; height:38px;}
+  .brand-word{font-size:23px; font-weight:700; color:var(--navy);}
+  .navlinks{display:flex; gap:30px; font-size:15px; font-weight:500;}
+  .navlinks a{position:relative; padding-bottom:3px;}
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
+    background:var(--orange); transition:width .2s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+
+  .btn{
+    display:inline-block; padding:13px 28px; border-radius:30px;
+    font-weight:600; font-size:15px; font-family:'Fredoka', sans-serif;
+    transition: transform .15s ease, background-color .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-solid{background:var(--orange); color:var(--white);}
+  .btn-solid:hover{background:var(--orange-deep);}
+  .btn-outline{background:transparent; color:var(--navy); border:2px solid var(--navy);}
+  .btn-outline:hover{background:var(--navy); color:var(--white);}
+
+  /* Hero */
+  .hero{padding:76px 40px 90px; overflow:hidden;}
+  .hero-inner{
+    max-width:1160px; margin:0 auto;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:50px; align-items:center;
+  }
+  .hero h1{font-size:46px; line-height:1.16; max-width:12ch; color:var(--navy);}
+  .hero p.lede{margin-top:20px; font-size:17.5px; max-width:42ch; color:#43494f;}
+  .hero-cta{margin-top:30px; display:flex; gap:16px; flex-wrap:wrap;}
+
+  .deal-card{
+    position:relative; background:var(--navy); border-radius:20px;
+    padding:38px 34px; color:var(--white); text-align:center;
+    box-shadow:0 18px 40px rgba(27,58,92,0.25);
+  }
+  .deal-tag{
+    position:absolute; top:-18px; left:50%; transform:translateX(-50%);
+    background:var(--yellow); color:var(--navy-deep); font-family:'Fredoka',sans-serif;
+    font-weight:600; font-size:13px; padding:6px 18px; border-radius:20px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.15);
+  }
+  .deal-card .item{font-size:22px; font-weight:500; margin-top:14px;}
+  .deal-card .price{font-family:'Fredoka',sans-serif; font-size:56px; font-weight:700; color:var(--orange); line-height:1;}
+  .deal-card .unit{font-size:14px; color:#C9D6E3; margin-top:6px;}
+
+  @media (prefers-reduced-motion: no-preference){
+    .deal-card{opacity:0; transform:scale(0.9) rotate(-2deg);}
+    .deal-card{animation:popIn .55s cubic-bezier(.2,.9,.3,1.2) .2s forwards;}
+    @keyframes popIn{ to{opacity:1; transform:scale(1) rotate(0deg);} }
+    .hero h1, .hero p.lede, .hero-cta{opacity:0; transform:translateY(14px);}
+    .hero h1{animation:fadeUp .6s ease .05s forwards;}
+    .hero p.lede{animation:fadeUp .6s ease .15s forwards;}
+    .hero-cta{animation:fadeUp .6s ease .25s forwards;}
+    @keyframes fadeUp{ to{opacity:1; transform:translateY(0);} }
+  }
+
+  @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr; gap:40px;}
+    .hero h1{font-size:36px; max-width:none;}
+  }
+
+  /* Section rhythm */
+  .section-pad{padding:80px 40px;}
+  .section-head{max-width:620px; margin:0 auto 40px;}
+  .section-head.left{margin:0 0 40px;}
+  .section-head h2{font-size:32px; color:var(--navy);}
+  .section-head p{margin-top:12px; font-size:16px; color:#43494f;}
+
+  /* Circular-style department grid */
+  .circular{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .circular-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:0;
+    border-top:1px solid var(--line); border-left:1px solid var(--line);
+  }
+  .circular-cell{
+    padding:34px 30px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .circular-cell .dept-name{font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; color:var(--navy);}
+  .circular-cell .dept-desc{font-size:14.5px; color:#565c62; margin-top:8px; max-width:34ch;}
+  .circular-cell .dept-price{
+    margin-top:16px; display:inline-block; font-family:'Fredoka',sans-serif; font-weight:600;
+    color:var(--orange-deep); font-size:15px; background:#FDF0E4; padding:4px 12px; border-radius:14px;
+  }
+
+  @media (max-width:860px){
+    .circular-grid{grid-template-columns:repeat(2, 1fr);}
+  }
+  @media (max-width:560px){
+    .circular-grid{grid-template-columns:1fr;}
+  }
+
+  /* Loyalty */
+  .loyalty{background:var(--navy); color:var(--white);}
+  .loyalty-inner{
+    max-width:1160px; margin:0 auto; padding:76px 40px;
+    display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;
+  }
+  .loyalty h2{color:var(--white); font-size:30px;}
+  .loyalty p{margin-top:14px; color:#C9D6E3; font-size:16px; max-width:46ch;}
+  .loyalty-card{
+    background:var(--white); border-radius:16px; padding:30px; color:var(--ink);
+  }
+  .loyalty-card h3{color:var(--navy); font-size:20px; margin-bottom:14px;}
+  .perk-row{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:14.5px;}
+  .perk-dot{width:8px; height:8px; border-radius:50%; background:var(--orange); margin-top:6px; flex-shrink:0;}
+
+  @media (max-width:860px){
+    .loyalty-inner{grid-template-columns:1fr;}
+  }
+
+  /* Location */
+  .location-inner{
+    max-width:1160px; margin:0 auto; padding:80px 40px;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;
+  }
+  .hours-list{margin-top:18px;}
+  .hours-row{display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line); font-size:15px;}
+  .hours-row:first-child{border-top:1px solid var(--line);}
+  .addr-block{margin-top:22px; font-size:15.5px; color:#43494f; line-height:1.7;}
+  .addr-block strong{color:var(--navy);}
+
+  @media (max-width:860px){
+    .location-inner{grid-template-columns:1fr; gap:36px;}
+  }
+
+  footer{
+    padding:30px 40px; background:var(--navy-deep); color:#B9C6D3;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+    font-size:13.5px;
+  }
+  .foot-note{width:100%; font-size:12px; color:#7E8FA0; margin-top:4px;}
+
+  @media (max-width:860px){
+    .wrap, .nav, .hero, .section-pad, footer{padding-left:22px; padding-right:22px;}
+    .navlinks{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="16" width="32" height="18" rx="3" fill="#1B3A5C"/>
+        <path d="M8 16l4-10h16l4 10" stroke="#E8792E" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="14" cy="34" r="2.6" fill="#F2B705"/>
+        <circle cx="26" cy="34" r="2.6" fill="#F2B705"/>
+      </svg>
+      <span class="brand-word">Millbrook Market</span>
+    </div>
+    <nav class="navlinks">
+      <a href="#deals">Deals</a>
+      <a href="#departments">Departments</a>
+      <a href="#location">Visit Us</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Fresh groceries, fair prices, since 1987.</h1>
+      <p class="lede">Millbrook Market has been the neighborhood's stop for weekly groceries, a full-service meat counter, and a bakery that still does things the slow way.</p>
+      <div class="hero-cta">
+        <a href="#deals" class="btn btn-solid">See this week's deals</a>
+        <a href="#location" class="btn btn-outline">Store hours</a>
+      </div>
+    </div>
+    <div class="deal-card" id="deals">
+      <span class="deal-tag">This week's special</span>
+      <div class="item">Ribeye Steaks</div>
+      <div class="price">$7.99</div>
+      <div class="unit">per pound &nbsp;·&nbsp; while supplies last</div>
+    </div>
+  </div>
+</section>
+
+<section id="departments" class="circular">
+  <div class="wrap section-pad" style="padding-bottom:0;">
+    <div class="section-head left">
+      <h2>What's on sale this week</h2>
+      <p>A look at the departments, and a few of the prices that keep folks coming back every Thursday.</p>
+    </div>
+  </div>
+  <div class="circular-grid">
+    <div class="circular-cell">
+      <div class="dept-name">Produce</div>
+      <div class="dept-desc">Locally grown when it's in season, restocked every morning.</div>
+      <span class="dept-price">Sweet corn 4/$1</span>
+    </div>
+    <div class="circular-cell">
+      <div class="dept-name">Meat &amp; Seafood</div>
+      <div class="dept-desc">A full-service counter that still cuts to order.</div>
+      <span class="dept-price">Chicken thighs $1.49/lb</span>
+    </div>
+    <div class="circular-cell">
+      <div class="dept-name">Bakery</div>
+      <div class="dept-desc">Bread baked fresh each morning, cakes made to order.</div>
+      <span class="dept-price">Sourdough loaf $3.49</span>
+    </div>
+    <div class="circular-cell">
+      <div class="dept-name">Dairy &amp; Frozen</div>
+      <div class="dept-desc">Everyday staples at everyday prices, no gimmicks.</div>
+      <span class="dept-price">Gallon milk $2.79</span>
+    </div>
+    <div class="circular-cell">
+      <div class="dept-name">Pantry</div>
+      <div class="dept-desc">Bulk bins and family packs for stretching a grocery budget.</div>
+      <span class="dept-price">Rice, 5lb bag $3.99</span>
+    </div>
+    <div class="circular-cell" style="border-right:none;">
+      <div class="dept-name">Deli</div>
+      <div class="dept-desc">Sliced to order, plus grab-and-go sandwiches at lunchtime.</div>
+      <span class="dept-price">Turkey breast $5.99/lb</span>
+    </div>
+  </div>
+</section>
+
+<section class="loyalty">
+  <div class="loyalty-inner">
+    <div>
+      <h2>The Millbrook Card pays for itself.</h2>
+      <p>Free to join, no monthly fee. Scan it at checkout and the sale prices apply automatically — no clipping, no app required if you'd rather not.</p>
+    </div>
+    <div class="loyalty-card">
+      <h3>What you get</h3>
+      <div class="perk-row"><span class="perk-dot"></span><span>Member-only prices on over 200 items every week</span></div>
+      <div class="perk-row"><span class="perk-dot"></span><span>A stamp toward a free rotisserie chicken every 10th visit</span></div>
+      <div class="perk-row"><span class="perk-dot"></span><span>Birthday month discount on your bakery order</span></div>
+      <a href="#" class="btn btn-solid" style="margin-top:8px;">Sign up at the register</a>
+    </div>
+  </div>
+</section>
+
+<section id="location">
+  <div class="location-inner">
+    <div>
+      <h2 style="color:var(--navy); font-size:30px;">Visit the store</h2>
+      <div class="hours-list">
+        <div class="hours-row"><span>Mon – Sat</span><span>6:00am – 11:00pm</span></div>
+        <div class="hours-row"><span>Sunday</span><span>7:00am – 9:00pm</span></div>
+      </div>
+      <div class="addr-block">
+        <strong>Millbrook Market</strong><br>
+        412 Millbrook Avenue<br>
+        Millbrook Falls, OH 44012<br>
+        (440) 555-0148
+      </div>
+    </div>
+    <div>
+      <h2 style="color:var(--navy); font-size:30px;">Good to know</h2>
+      <p style="margin-top:14px; color:#43494f; font-size:15.5px; max-width:44ch;">Curbside pickup is available for online orders placed before 3pm. The deli and bakery counters close 30 minutes before the rest of the store. Cash, card, and EBT accepted at every register.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>&copy; 2026 Millbrook Market</span>
+  <span>412 Millbrook Avenue, Millbrook Falls, OH</span>
+  <span class="foot-note">Fictional business created for design portfolio purposes.</span>
+</footer>
+
+<script>
+(function(){
+  var header = document.querySelector('header');
+  var onScroll = function(){
+    if(window.scrollY > 8){ header.classList.add('scrolled'); }
+    else { header.classList.remove('scrolled'); }
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
